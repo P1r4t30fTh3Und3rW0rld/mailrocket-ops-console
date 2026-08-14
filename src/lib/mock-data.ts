@@ -123,11 +123,11 @@ export function mockAccountDetail(id: string): AccountDetail | null {
       complaint: Math.max(0, +(base.complaint_rate * (0.5 + ((i * 17) % 90) / 100)).toFixed(3)),
     })),
     emails: Array.from({ length: 8 }, (_, i) => {
-      const status = (["delivered", "delivered", "bounced", "delivered", "complained", "queued", "failed", "delivered"] as const)[i];
+      const status = (["delivered", "delivered", "bounced", "delivered", "complained", "queued", "failed", "delivered"] as const)[i]!;
       return {
         id: `em_${base.id.slice(0, 8)}${i}${"abcdef"[i % 6]}9k`,
         to: `user${i + 1}@${["gmail.com", "outlook.com", "yahoo.in", "rediffmail.com"][i % 4]}`,
-        subject: ["Your OTP code", "Invoice #INR-8821", "Password reset", "Order shipped", "Weekly digest", "Welcome aboard", "Payment failed", "Account verified"][i],
+        subject: ["Your OTP code", "Invoice #INR-8821", "Password reset", "Order shipped", "Weekly digest", "Welcome aboard", "Payment failed", "Account verified"][i]!,
         status,
         created_at: iso(0, 12 - i),
         events: [
@@ -156,15 +156,15 @@ export function mockAccountDetail(id: string): AccountDetail | null {
 }
 
 export const MOCK_AUDIT: AuditEvent[] = [
-  { id: "aud_01", at: iso(0, 5), actor: "priyanshu@mailrocket.in", action: "account.restrict", account_id: SEEDS[1].id, account_name: "PayLocal", reason: "Bounce rate above 10% for 36h on transactional stream", ip: "10.4.0.19", before: { status: "active" }, after: { status: "restricted" } },
-  { id: "aud_02", at: iso(1, 18), actor: "priyanshu@mailrocket.in", action: "account.suspend", account_id: SEEDS[3].id, account_name: "Chai Commerce", reason: "Confirmed purchased-list sending, SES complaint spike", ip: "10.4.0.19", before: { status: "restricted" }, after: { status: "suspended" } },
-  { id: "aud_03", at: iso(1, 11), actor: "ops@mailrocket.in", action: "quota.override", account_id: SEEDS[5].id, account_name: "Bolt Kirana", reason: "Diwali burst approved by founder, 72h window", ip: "10.4.0.22", before: { quota_limit: 150000 }, after: { quota_limit: 400000, expires_at: iso(-3) } },
-  { id: "aud_04", at: iso(2, 9), actor: "priyanshu@mailrocket.in", action: "account.unsuspend", account_id: SEEDS[9].id, account_name: "Zaru Studios", reason: "Customer removed scraped list and enabled double opt-in", ip: "10.4.0.19", before: { status: "suspended" }, after: { status: "restricted" } },
-  { id: "aud_05", at: iso(3, 15), actor: "ops@mailrocket.in", action: "apikey.revoke", account_id: SEEDS[0].id, account_name: "Acme Logistics", reason: "Key leaked in public GitHub repository", ip: "10.4.0.22", before: { key_prefix: "mr_live_ZZ08", revoked: false }, after: { revoked: true } },
-  { id: "aud_06", at: iso(4, 10), actor: "priyanshu@mailrocket.in", action: "plan.change", account_id: SEEDS[8].id, account_name: "Ledgerly", reason: "Upgraded to scale after annual contract signature", ip: "10.4.0.19", before: { plan: "growth" }, after: { plan: "scale" } },
-  { id: "aud_07", at: iso(5, 13), actor: "ops@mailrocket.in", action: "credits.add", account_id: SEEDS[6].id, account_name: "Medhaa Health", reason: "Goodwill credit for ap-south-1 delivery incident", ip: "10.4.0.22", before: { credits: 0 }, after: { credits: 50000 } },
-  { id: "aud_08", at: iso(6, 8), actor: "priyanshu@mailrocket.in", action: "deliverability.review", account_id: SEEDS[11].id, account_name: "Orbit Tickets", reason: "Reviewed bounce spike, cause was one stale ticketing list", ip: "10.4.0.19", before: { flagged: true }, after: { flagged: false, reviewed_at: iso(6) } },
-  { id: "aud_09", at: iso(8, 16), actor: "priyanshu@mailrocket.in", action: "user.disable_login", account_id: SEEDS[3].id, account_name: "Chai Commerce", reason: "Fraud investigation, login frozen pending KYC", ip: "10.4.0.19", before: { login_enabled: true }, after: { login_enabled: false } },
+  { id: "aud_01", at: iso(0, 5), actor: "priyanshu@mailrocket.in", action: "account.restrict", account_id: SEEDS[1]!.id, account_name: "PayLocal", reason: "Bounce rate above 10% for 36h on transactional stream", ip: "10.4.0.19", before: { status: "active" }, after: { status: "restricted" } },
+  { id: "aud_02", at: iso(1, 18), actor: "priyanshu@mailrocket.in", action: "account.suspend", account_id: SEEDS[3]!.id, account_name: "Chai Commerce", reason: "Confirmed purchased-list sending, SES complaint spike", ip: "10.4.0.19", before: { status: "restricted" }, after: { status: "suspended" } },
+  { id: "aud_03", at: iso(1, 11), actor: "ops@mailrocket.in", action: "quota.override", account_id: SEEDS[5]!.id, account_name: "Bolt Kirana", reason: "Diwali burst approved by founder, 72h window", ip: "10.4.0.22", before: { quota_limit: 150000 }, after: { quota_limit: 400000, expires_at: iso(-3) } },
+  { id: "aud_04", at: iso(2, 9), actor: "priyanshu@mailrocket.in", action: "account.unsuspend", account_id: SEEDS[9]!.id, account_name: "Zaru Studios", reason: "Customer removed scraped list and enabled double opt-in", ip: "10.4.0.19", before: { status: "suspended" }, after: { status: "restricted" } },
+  { id: "aud_05", at: iso(3, 15), actor: "ops@mailrocket.in", action: "apikey.revoke", account_id: SEEDS[0]!.id, account_name: "Acme Logistics", reason: "Key leaked in public GitHub repository", ip: "10.4.0.22", before: { key_prefix: "mr_live_ZZ08", revoked: false }, after: { revoked: true } },
+  { id: "aud_06", at: iso(4, 10), actor: "priyanshu@mailrocket.in", action: "plan.change", account_id: SEEDS[8]!.id, account_name: "Ledgerly", reason: "Upgraded to scale after annual contract signature", ip: "10.4.0.19", before: { plan: "growth" }, after: { plan: "scale" } },
+  { id: "aud_07", at: iso(5, 13), actor: "ops@mailrocket.in", action: "credits.add", account_id: SEEDS[6]!.id, account_name: "Medhaa Health", reason: "Goodwill credit for ap-south-1 delivery incident", ip: "10.4.0.22", before: { credits: 0 }, after: { credits: 50000 } },
+  { id: "aud_08", at: iso(6, 8), actor: "priyanshu@mailrocket.in", action: "deliverability.review", account_id: SEEDS[11]!.id, account_name: "Orbit Tickets", reason: "Reviewed bounce spike, cause was one stale ticketing list", ip: "10.4.0.19", before: { flagged: true }, after: { flagged: false, reviewed_at: iso(6) } },
+  { id: "aud_09", at: iso(8, 16), actor: "priyanshu@mailrocket.in", action: "user.disable_login", account_id: SEEDS[3]!.id, account_name: "Chai Commerce", reason: "Fraud investigation, login frozen pending KYC", ip: "10.4.0.19", before: { login_enabled: true }, after: { login_enabled: false } },
 ];
 
 export const MOCK_USERS: OpsUser[] = SEEDS.slice(0, 9).map((s, i) => ({
@@ -189,7 +189,7 @@ export const MOCK_PLATFORM: PlatformStats = {
   bounce_rate: 4.2,
   complaint_rate: 0.06,
   accepts_7d: Array.from({ length: 7 }, (_, i) => ({
-    day: ["Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu"][i],
-    accepted: [1104000, 812000, 738000, 1290400, 1341200, 1288100, 1284903][i],
+    day: ["Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu"][i]!,
+    accepted: [1104000, 812000, 738000, 1290400, 1341200, 1288100, 1284903][i]!,
   })),
 };
