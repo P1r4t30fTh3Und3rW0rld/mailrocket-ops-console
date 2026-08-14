@@ -114,7 +114,7 @@ export function mockAccountDetail(id: string): AccountDetail | null {
     ],
     usage: {
       "24h": usageFor(daily / 24, 12, (i) => `${String(i * 2).padStart(2, "0")}:00`),
-      "7d": usageFor(daily, 7, (i) => ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][i]),
+      "7d": usageFor(daily, 7, (i) => ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][i]!),
       "30d": usageFor(daily, 30, (i) => `D-${29 - i}`),
     },
     reputation_series: Array.from({ length: 14 }, (_, i) => ({
