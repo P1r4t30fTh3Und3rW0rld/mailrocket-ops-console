@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BillingRouteImport } from './routes/billing'
 import { Route as DeliverabilityRouteImport } from './routes/deliverability'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as UsersRouteImport } from './routes/users'
 import { Route as AccountsIndexRouteImport } from './routes/accounts.index'
 
@@ -36,6 +37,11 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlatformRoute = PlatformRouteImport.update({
+  id: '/platform',
+  path: '/platform',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const UsersRoute = UsersRouteImport.update({
   id: '/users',
   path: '/users',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/billing': typeof BillingRoute
   '/deliverability': typeof DeliverabilityRoute
   '/login': typeof LoginRoute
+  '/platform': typeof PlatformRoute
   '/users': typeof UsersRoute
   '/accounts/': typeof AccountsIndexRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/billing': typeof BillingRoute
   '/deliverability': typeof DeliverabilityRoute
   '/login': typeof LoginRoute
+  '/platform': typeof PlatformRoute
   '/users': typeof UsersRoute
   '/accounts': typeof AccountsIndexRoute
 }
@@ -69,21 +77,36 @@ export interface FileRoutesById {
   '/billing': typeof BillingRoute
   '/deliverability': typeof DeliverabilityRoute
   '/login': typeof LoginRoute
+  '/platform': typeof PlatformRoute
   '/users': typeof UsersRoute
   '/accounts/': typeof AccountsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/billing' | '/deliverability' | '/login' | '/users' | '/accounts/'
+    | '/'
+    | '/billing'
+    | '/deliverability'
+    | '/login'
+    | '/platform'
+    | '/users'
+    | '/accounts/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/billing' | '/deliverability' | '/login' | '/users' | '/accounts'
+  to:
+    | '/'
+    | '/billing'
+    | '/deliverability'
+    | '/login'
+    | '/platform'
+    | '/users'
+    | '/accounts'
   id:
     | '__root__'
     | '/'
     | '/billing'
     | '/deliverability'
     | '/login'
+    | '/platform'
     | '/users'
     | '/accounts/'
   fileRoutesById: FileRoutesById
@@ -93,6 +116,7 @@ export interface RootRouteChildren {
   BillingRoute: typeof BillingRoute
   DeliverabilityRoute: typeof DeliverabilityRoute
   LoginRoute: typeof LoginRoute
+  PlatformRoute: typeof PlatformRoute
   UsersRoute: typeof UsersRoute
   AccountsIndexRoute: typeof AccountsIndexRoute
 }
@@ -127,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/platform': {
+      id: '/platform'
+      path: '/platform'
+      fullPath: '/platform'
+      preLoaderRoute: typeof PlatformRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/users': {
       id: '/users'
       path: '/users'
@@ -149,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   BillingRoute: BillingRoute,
   DeliverabilityRoute: DeliverabilityRoute,
   LoginRoute: LoginRoute,
+  PlatformRoute: PlatformRoute,
   UsersRoute: UsersRoute,
   AccountsIndexRoute: AccountsIndexRoute,
 }
