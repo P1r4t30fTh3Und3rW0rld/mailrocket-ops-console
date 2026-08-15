@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DeliverabilityRouteImport } from './routes/deliverability'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AccountsIndexRouteImport } from './routes/accounts.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeliverabilityRoute = DeliverabilityRouteImport.update({
+  id: '/deliverability',
+  path: '/deliverability',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -31,30 +37,34 @@ const AccountsIndexRoute = AccountsIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/deliverability': typeof DeliverabilityRoute
   '/login': typeof LoginRoute
   '/accounts/': typeof AccountsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/deliverability': typeof DeliverabilityRoute
   '/login': typeof LoginRoute
   '/accounts': typeof AccountsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/deliverability': typeof DeliverabilityRoute
   '/login': typeof LoginRoute
   '/accounts/': typeof AccountsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/accounts/'
+  fullPaths: '/' | '/deliverability' | '/login' | '/accounts/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/accounts'
-  id: '__root__' | '/' | '/login' | '/accounts/'
+  to: '/' | '/deliverability' | '/login' | '/accounts'
+  id: '__root__' | '/' | '/deliverability' | '/login' | '/accounts/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DeliverabilityRoute: typeof DeliverabilityRoute
   LoginRoute: typeof LoginRoute
   AccountsIndexRoute: typeof AccountsIndexRoute
 }
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/deliverability': {
+      id: '/deliverability'
+      path: '/deliverability'
+      fullPath: '/deliverability'
+      preLoaderRoute: typeof DeliverabilityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DeliverabilityRoute: DeliverabilityRoute,
   LoginRoute: LoginRoute,
   AccountsIndexRoute: AccountsIndexRoute,
 }
