@@ -28,9 +28,8 @@ import { api } from "@/lib/api";
 import type { AccountStatus, Plan } from "@/lib/ops-types";
 
 export const Route = createFileRoute("/accounts/")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    q: typeof search["q"] === "string" ? search["q"] : "",
-  }),
+  validateSearch: (search: Record<string, unknown>): { q?: string } =>
+    typeof search["q"] === "string" && search["q"] ? { q: search["q"] } : {},
   head: () => ({
     meta: [
       { title: "Accounts — MailRocket Ops" },
@@ -48,7 +47,7 @@ export const Route = createFileRoute("/accounts/")({
 
 function AccountsPage() {
   const navigate = useNavigate();
-  const { q } = Route.useSearch();
+  const { q = "" } = Route.useSearch();
   const [term, setTerm] = useState(q);
   const [status, setStatus] = useState<AccountStatus | "all">("all");
   const [plan, setPlan] = useState<Plan | "all">("all");
